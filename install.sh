@@ -12,18 +12,17 @@ setup-p10k() {
     echo "* Installing Powerlevel10k..."
     echo "-----------------------------------------------------------"
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-    cat $HOME/dotfiles/.p10k.zsh > $HOME/.p10k.zsh
+    cat $(pwd)/dotfiles/.p10k.zsh > $HOME/.p10k.zsh
 }
 
 zshrc() {
     echo "==========================================================="
     echo "                  Import zshrc                   "
     echo "-----------------------------------------------------------"
-    cat $HOME/dotfiles/zshrc > $HOME/.zshrc
+    cat $(pwd)/dotfiles/zshrc > $HOME/.zshrc
 }
 
-cd $HOME
-cat $HOME/dotfiles/.vimrc > $HOME/.vimrc
+cat $(pwd)/dotfiles/.vimrc > $HOME/.vimrc
 setup-omz
 setup-p10k
 zshrc
