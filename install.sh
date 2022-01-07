@@ -22,16 +22,7 @@ zshrc() {
     cat $(pwd)/.zshrc > $HOME/.zshrc
 }
 
-upgrade-packages() {
-    echo "==========================================================="
-    echo "                      Upgrade packages                     "
-    echo "-----------------------------------------------------------"
-
-    sudo apt-get update && sudo apt-get upgrade -y
-}
-
 cat $(pwd)/.vimrc > $HOME/.vimrc
 setup-omz
 setup-p10k
 zshrc
-upgrade-packages
