@@ -2,9 +2,11 @@
 
 setup-omz() {
     echo "==========================================================="
-    echo "* Installing Oh-My-Zsh..."
+    echo "* Installing Oh-My-Zsh and extensions..."
     echo "-----------------------------------------------------------"
     curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash
+    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 }
 
 setup-p10k() {
