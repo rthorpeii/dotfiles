@@ -1,0 +1,15 @@
+[alias]
+    co = checkout
+    ci = commit
+    st = status
+    br = branch
+    lol = log --graph --oneline --decorate --color --all
+[color]
+    ui = auto
+    branch = auto
+    diff = auto
+    interactive = auto
+    status = auto
+    grep = auto
+[core]
+    editor = vim
