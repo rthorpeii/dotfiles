@@ -13,3 +13,5 @@
     grep = auto
 [core]
     editor = vim
+[push]
+    autoSetupRemote = true
