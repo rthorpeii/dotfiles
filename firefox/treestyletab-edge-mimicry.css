@@ -355,6 +355,15 @@ tab-item-substance {
   max-height: var(--tab-size);
   position: relative;
 }
+
+/* TST applies `max-width: calc(100% - var(--tab-visual-indent))` to
+   tab-item-substance for non-pinned tabs, which double-indents because we
+   already indent via padding-left on tab-item above. Zero out the visual
+   indent on the substance so the right edge stays aligned with the sidebar. */
+tab-item:not(.pinned) tab-item-substance {
+  --tab-visual-indent: 0px;
+  max-width: 100%;
+}
 .overflow tab-item {
   padding-right: calc(var(--tab-margin-left) + var(--shift-tabs-for-scrollbar-distance));
 }
