@@ -400,6 +400,32 @@ tab-item:not(.group-tab).bundled-active tab-item-substance:hover,
   --tab-text: var(--tab-text-active);
   --tab-text-inverted: var(--tab-text-active-inverted);
 }
+
+/* Magenta border on active tab */
+tab-item:not(.group-tab).active tab-item-substance,
+tab-item:not(.group-tab).bundled-active tab-item-substance {
+  outline: 2px solid magenta !important;
+  outline-offset: -2px;
+}
+tab-item:not(.group-tab).active tab-item-substance .background,
+tab-item:not(.group-tab).bundled-active tab-item-substance .background {
+  background-color: transparent !important;
+  background-image: none !important;
+  opacity: 0 !important;
+}
+/* Container tabs render their identity marker above the substance, which
+   tints the outline. Re-draw the outline on the marker so it stays vivid. */
+tab-item:not(.group-tab).active .contextual-identity-marker,
+tab-item:not(.group-tab).bundled-active .contextual-identity-marker {
+  outline: 2px solid magenta !important;
+  outline-offset: -2px;
+}
+
+/* Always show the close button (TST hides it on non-active, non-hover tabs by default),
+   but only while the sidebar itself is being hovered. Excludes group tabs and pinned tabs. */
+:root.regular:hover tab-item:not(#dummy-tab):not(.group-tab):not([type="group"]):not(.pinned) tab-item-substance:not(.active):not(:hover) tab-closebox {
+  display: flex !important;
+}
 tab-item:not(.active):not(.bundled-active):not(.highlighted) tab-item-substance:hover,
 tab-item:not(.active):not(.bundled-active):not(.highlighted) tab-item-substance:focus{
   --tab-surface: var(--tab-text-regular);
@@ -508,7 +534,7 @@ tab-item[data-drop-position="after"]:not(.faviconized)::before {
 }
 .group-tab .favicon,
 .group-tab .extra-items-container:not(.indent),
-.group-tab[data-child-ids]:not(.subtree-collapsed) .closebox {
+.group-tab .closebox {
   display: none !important;
 }
 .group-tab[data-child-ids] .ui {
@@ -555,6 +581,7 @@ tab-item:not(.collapsed):not([data-level="0"]):not(.pinned) .highlighter {
   position: absolute;
   translate: calc(0em - var(--tab-margin-left)) -1.5px;
   background: var(--tab-text);
+  display: none;
 }
 tab-item.active:not(.collapsed):not([data-level="0"]):not(.pinned) .highlighter {
   background: var(--tab-highlighter);
@@ -575,6 +602,12 @@ tab-item:not(.group-tab) .twisty:hover ~ .ui {
   margin-left: 1.5em;
   max-width: calc(100% - 1.5em);
   transition: margin-left 0.2s ease, max-width 0.2s ease;
+}
+/* Permanent left padding on parent tabs so the twisty caret doesn't overlap the favicon.
+   Only applied while the sidebar is hovered, since the twisty itself is hidden otherwise. */
+:root:hover tab-item[data-child-ids]:not(.group-tab) .ui {
+  margin-left: 0.6em;
+  max-width: calc(100% - 0.6em);
 }
 tab-item:not(.group-tab) .twisty::before {
   mask-position: left;
@@ -884,8 +917,6 @@ tab-item.faviconized {
 }
 
 /** Bottom Tab Bar Area **/
-
-
 
 
 @media screen and (min-width: 0px) and (max-width: 10em) {
