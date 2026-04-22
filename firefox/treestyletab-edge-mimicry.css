@@ -541,6 +541,29 @@ tab-item[data-drop-position="after"]:not(.faviconized)::before {
   margin-left: calc(var(--tab-size)/2);
 }
 
+/* Firefox-native tab groups: replace the default globe favicon with a folder icon. */
+tab-item[type="group"] tab-item-substance .favicon-builtin::before {
+  background: url("/resources/icons/folder.svg") no-repeat center / 100% !important;
+}
+:root.simulate-svg-context-fill tab-item[type="group"] tab-item-substance .favicon-builtin::before {
+  background: var(--tab-text) !important;
+  mask: url("/resources/icons/folder.svg") no-repeat center / 100% !important;
+}
+
+/* Native tab-group color line: force the 2px width at all times so the line
+   can't briefly fill the whole tab when [data-group-id] is missing/being updated. */
+.native-tab-group-line {
+  max-width: 2px !important;
+  min-width: 2px !important;
+  inset-inline-end: auto !important;
+}
+
+/* Firefox-native group tabs: allow the label to use the full caption width
+   instead of being truncated by TST's --tab-label-width / --favicon-size cap. */
+tab-item[type="group"] .caption {
+  max-width: 100% !important;
+}
+
 
 
 
@@ -570,25 +593,10 @@ tab-item.removing, tab-item:not(.pinned).collapsed, tab-item.duplicating {
   z-index: var(--invisible-z-index);
 }
 
-.highlighter {
-  width: 2px;
-  height: 32px !important;
-}
-.highlighter::before {
+.highlighter,
+.highlighter::before,
+.highlighter::after {
   display: none !important;
-}
-tab-item:not(.collapsed):not([data-level="0"]):not(.pinned) .highlighter {
-  position: absolute;
-  translate: calc(0em - var(--tab-margin-left)) -1.5px;
-  background: var(--tab-text);
-  display: none;
-}
-tab-item.active:not(.collapsed):not([data-level="0"]):not(.pinned) .highlighter {
-  background: var(--tab-highlighter);
-}
-tab-item.group-tab:not(.collapsed) .highlighter {
-  height: 32px !important;
-  translate: calc(0em - calc(var(--tab-margin-left) + 4px));
 }
 
 /* Twisty (Collapse) Button */
@@ -646,6 +654,7 @@ tab-label {
   margin-left: calc(var(--favicon-size)/2) !important;
   margin-bottom: 0.15em;
   line-height: var(--tab-size);
+  font-size: 1.2rem;
 }
 tab-item.sound-playing tab-label {
   margin-left: unset !important;
