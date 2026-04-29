@@ -263,15 +263,6 @@ tab-item.faviconized .contextual-identity-marker {
 /** END **/
 
 
-
-
-
-
-
-
-
-
-
 /** Main body layout **/
 
 /* Move Scrollbar to other side */
@@ -550,18 +541,49 @@ tab-item[type="group"] tab-item-substance .favicon-builtin::before {
   mask: url("/resources/icons/folder.svg") no-repeat center / 100% !important;
 }
 
-/* Native tab-group color line: force the 2px width at all times so the line
-   can't briefly fill the whole tab when [data-group-id] is missing/being updated. */
+/* Native tab-group color line: force the 2px width and pin to the left edge
+   of the tab at all times. Without these overrides:
+   - When [data-group-id] is briefly missing, the line falls back to
+     inset:0 0 0 0 and would stretch full-tab.
+   - TST's scrollbar-shift / nested-indent rules can push inset-inline-start
+     far enough right that the 2px line ends up overlapping the active tab's
+     magenta border instead of sitting in the indent gap. */
 .native-tab-group-line {
   max-width: 2px !important;
   min-width: 2px !important;
   inset-inline-end: auto !important;
+}
+:root.regular .native-tab-group-line {
+  inset-inline-start: 2px !important;
+}
+:root.inverted .native-tab-group-line {
+  inset-inline-start: auto !important;
+  inset-inline-end: 2px !important;
 }
 
 /* Firefox-native group tabs: allow the label to use the full caption width
    instead of being truncated by TST's --tab-label-width / --favicon-size cap. */
 tab-item[type="group"] .caption {
   max-width: 100% !important;
+}
+
+/* Firefox-native group tabs: always use the collapsed-state caption colors
+   (pale background, dark text) regardless of whether the group is open. */
+tab-item[type="group"] .caption,
+tab-item[type="group"] tab-item-substance:hover .caption {
+  --tab-surface: light-dark(var(--tab-group-color-pale), var(--tab-group-color)) !important;
+  --tab-text: light-dark(var(--tab-group-color), var(--tab-group-color-pale)) !important;
+}
+
+/* When the group is collapsed (subtree hidden), make it visually quieter
+   than the open state — keep a hint of the group color but lower contrast. */
+tab-item[type="group"].subtree-collapsed .caption,
+tab-item[type="group"].subtree-collapsed tab-item-substance:hover .caption {
+  --tab-surface: color-mix(in srgb, light-dark(var(--tab-group-color-pale), var(--tab-group-color)) 45%, transparent) !important;
+  --tab-border: transparent !important;
+  --tab-text: light-dark(var(--tab-group-color), var(--tab-group-color-pale)) !important;
+  opacity: 0.75;
+  font-weight: 400 !important;
 }
 
 
@@ -756,22 +778,28 @@ tab-item .label {
 
 .contextual-identity-marker {
   z-index: 10;
-  top: 0 !important;
-  bottom: 0 !important;
+  inset: 0 !important;
+  width: 100% !important;
   min-width: 100% !important;
-  opacity: 0.3;
+  max-width: 100% !important;
+  height: 100% !important;
+  border-radius: var(--tab-border-radius-size);
+  opacity: 0.12 !important;
 }
 .active .contextual-identity-marker {
-  opacity: 0.7;
+  opacity: 0.25 !important;
 }
 .pinned .contextual-identity-marker {
-  opacity: 0.5;
+  opacity: 0.18 !important;
 }
 .discarded .contextual-identity-marker {    
-  opacity: 0.2;
+  opacity: 0.08 !important;
 }
-.group-tab .contextual-identity-marker {
-  opacity: 1.0;
+.group-tab .contextual-identity-marker,
+.group-tab.active .contextual-identity-marker,
+.group-tab.pinned .contextual-identity-marker,
+.group-tab.discarded .contextual-identity-marker {
+  opacity: 0.9 !important;
 }
 
 
