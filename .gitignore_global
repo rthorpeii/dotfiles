@@ -1,0 +1,12 @@
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+
+# Agent package manager
+apm_modules
+.agents
+
+# Temp folders
+tmp
+temp

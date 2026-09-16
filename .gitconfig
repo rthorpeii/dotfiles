@@ -13,5 +13,6 @@
     grep = auto
 [core]
     editor = vim
+    excludesfile = ~/.gitignore_global
 [push]
     autoSetupRemote = true

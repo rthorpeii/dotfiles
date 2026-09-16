@@ -20,6 +20,7 @@ copy-files() {
     cat $(pwd)/.zshrc > $HOME/.zshrc
     cat $(pwd)/.p10k.zsh > $HOME/.p10k.zsh
     cat $(pwd)/.vimrc > $HOME/.vimrc
+    cat $(pwd)/.gitignore_global > $HOME/.gitignore_global
     cat $(pwd)/.gitconfig > $HOME/.gitconfig
     cp $(pwd)/zsh_custom/* ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
 }
